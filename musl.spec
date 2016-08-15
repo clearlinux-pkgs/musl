@@ -4,7 +4,7 @@
 #
 Name     : musl
 Version  : 1.1.15
-Release  : 1
+Release  : 2
 URL      : https://www.musl-libc.org/releases/musl-1.1.15.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.1.15.tar.gz
 Summary  : No detailed summary available
@@ -48,7 +48,7 @@ dev components for the musl package.
 
 %build
 export LANG=C
-%configure --disable-static --target=x86_64-generic-linux
+%configure --disable-static --target=x86_64-generic-linux --prefix=/usr/lib64/musl
 make V=1  %{?_smp_mflags}
 
 %install
