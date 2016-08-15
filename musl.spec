@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : musl
 Version  : 1.1.15
-Release  : 6
+Release  : 7
 URL      : https://www.musl-libc.org/releases/musl-1.1.15.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.1.15.tar.gz
 Summary  : No detailed summary available
@@ -59,7 +59,7 @@ lib components for the musl package.
 
 %build
 export LANG=C
-%configure  ; ./configure --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr
+%configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64
 make V=1  %{?_smp_mflags}
 
 %install
@@ -69,21 +69,21 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 /lib/ld-musl-x86_64.so.1
-/usr/lib64/musl/lib/Scrt1.o
-/usr/lib64/musl/lib/crt1.o
-/usr/lib64/musl/lib/crti.o
-/usr/lib64/musl/lib/crtn.o
-/usr/lib64/musl/lib/libc.a
-/usr/lib64/musl/lib/libcrypt.a
-/usr/lib64/musl/lib/libdl.a
-/usr/lib64/musl/lib/libm.a
-/usr/lib64/musl/lib/libpthread.a
-/usr/lib64/musl/lib/libresolv.a
-/usr/lib64/musl/lib/librt.a
-/usr/lib64/musl/lib/libutil.a
-/usr/lib64/musl/lib/libxnet.a
-/usr/lib64/musl/lib/musl-gcc.specs
-/usr/lib64/musl/lib/rcrt1.o
+/usr/lib64/musl/lib64/Scrt1.o
+/usr/lib64/musl/lib64/crt1.o
+/usr/lib64/musl/lib64/crti.o
+/usr/lib64/musl/lib64/crtn.o
+/usr/lib64/musl/lib64/libc.a
+/usr/lib64/musl/lib64/libcrypt.a
+/usr/lib64/musl/lib64/libdl.a
+/usr/lib64/musl/lib64/libm.a
+/usr/lib64/musl/lib64/libpthread.a
+/usr/lib64/musl/lib64/libresolv.a
+/usr/lib64/musl/lib64/librt.a
+/usr/lib64/musl/lib64/libutil.a
+/usr/lib64/musl/lib64/libxnet.a
+/usr/lib64/musl/lib64/musl-gcc.specs
+/usr/lib64/musl/lib64/rcrt1.o
 
 %files bin
 %defattr(-,root,root,-)
@@ -304,4 +304,4 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/musl/lib/libc.so
+/usr/lib64/musl/lib64/libc.so
