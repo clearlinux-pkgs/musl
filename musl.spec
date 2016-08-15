@@ -4,7 +4,7 @@
 #
 Name     : musl
 Version  : 1.1.15
-Release  : 4
+Release  : 5
 URL      : https://www.musl-libc.org/releases/musl-1.1.15.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.1.15.tar.gz
 Summary  : No detailed summary available
@@ -58,7 +58,7 @@ lib components for the musl package.
 
 %build
 export LANG=C
-%configure --disable-static --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64
+%configure --disable-static ; ./configure --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr
 make V=1  %{?_smp_mflags}
 
 %install
@@ -68,12 +68,12 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 /lib/ld-musl-x86_64.so.1
-/usr/lib64/musl/lib64/Scrt1.o
-/usr/lib64/musl/lib64/crt1.o
-/usr/lib64/musl/lib64/crti.o
-/usr/lib64/musl/lib64/crtn.o
-/usr/lib64/musl/lib64/musl-gcc.specs
-/usr/lib64/musl/lib64/rcrt1.o
+/usr/lib64/musl/lib/Scrt1.o
+/usr/lib64/musl/lib/crt1.o
+/usr/lib64/musl/lib/crti.o
+/usr/lib64/musl/lib/crtn.o
+/usr/lib64/musl/lib/musl-gcc.specs
+/usr/lib64/musl/lib/rcrt1.o
 
 %files bin
 %defattr(-,root,root,-)
@@ -294,4 +294,4 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/musl/lib64/libc.so
+/usr/lib64/musl/lib/libc.so
