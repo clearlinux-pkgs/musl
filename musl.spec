@@ -4,13 +4,14 @@
 #
 Name     : musl
 Version  : 1.1.15
-Release  : 2
+Release  : 3
 URL      : https://www.musl-libc.org/releases/musl-1.1.15.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.1.15.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
 Requires: musl-bin
+Requires: musl-lib
 Patch1: 0001-Don-t-use-cross-compile-ar-or-ranlib.patch
 
 %description
@@ -32,14 +33,12 @@ Group: Binaries
 bin components for the musl package.
 
 
-%package dev
-Summary: dev components for the musl package.
-Group: Development
-Requires: musl-bin
-Provides: musl-devel
+%package lib
+Summary: lib components for the musl package.
+Group: Libraries
 
-%description dev
-dev components for the musl package.
+%description lib
+lib components for the musl package.
 
 
 %prep
@@ -48,7 +47,7 @@ dev components for the musl package.
 
 %build
 export LANG=C
-%configure --disable-static --target=x86_64-generic-linux --prefix=/usr/lib64/musl
+%configure --disable-static --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/ --libdir=/usr/lib64/musl/lib64
 make V=1  %{?_smp_mflags}
 
 %install
@@ -58,137 +57,227 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 /lib/ld-musl-x86_64.so.1
-/usr/lib64/Scrt1.o
-/usr/lib64/crt1.o
-/usr/lib64/crti.o
-/usr/lib64/crtn.o
-/usr/lib64/musl-gcc.specs
-/usr/lib64/rcrt1.o
+/usr/lib64/musl/aio.h
+/usr/lib64/musl/alloca.h
+/usr/lib64/musl/ar.h
+/usr/lib64/musl/arpa/ftp.h
+/usr/lib64/musl/arpa/inet.h
+/usr/lib64/musl/arpa/nameser.h
+/usr/lib64/musl/arpa/nameser_compat.h
+/usr/lib64/musl/arpa/telnet.h
+/usr/lib64/musl/arpa/tftp.h
+/usr/lib64/musl/assert.h
+/usr/lib64/musl/bits/alltypes.h
+/usr/lib64/musl/bits/endian.h
+/usr/lib64/musl/bits/errno.h
+/usr/lib64/musl/bits/fcntl.h
+/usr/lib64/musl/bits/fenv.h
+/usr/lib64/musl/bits/float.h
+/usr/lib64/musl/bits/io.h
+/usr/lib64/musl/bits/ioctl.h
+/usr/lib64/musl/bits/ioctl_fix.h
+/usr/lib64/musl/bits/ipc.h
+/usr/lib64/musl/bits/limits.h
+/usr/lib64/musl/bits/mman.h
+/usr/lib64/musl/bits/msg.h
+/usr/lib64/musl/bits/poll.h
+/usr/lib64/musl/bits/posix.h
+/usr/lib64/musl/bits/reg.h
+/usr/lib64/musl/bits/resource.h
+/usr/lib64/musl/bits/sem.h
+/usr/lib64/musl/bits/setjmp.h
+/usr/lib64/musl/bits/shm.h
+/usr/lib64/musl/bits/signal.h
+/usr/lib64/musl/bits/socket.h
+/usr/lib64/musl/bits/stat.h
+/usr/lib64/musl/bits/statfs.h
+/usr/lib64/musl/bits/stdarg.h
+/usr/lib64/musl/bits/stdint.h
+/usr/lib64/musl/bits/syscall.h
+/usr/lib64/musl/bits/termios.h
+/usr/lib64/musl/bits/user.h
+/usr/lib64/musl/byteswap.h
+/usr/lib64/musl/complex.h
+/usr/lib64/musl/cpio.h
+/usr/lib64/musl/crypt.h
+/usr/lib64/musl/ctype.h
+/usr/lib64/musl/dirent.h
+/usr/lib64/musl/dlfcn.h
+/usr/lib64/musl/elf.h
+/usr/lib64/musl/endian.h
+/usr/lib64/musl/err.h
+/usr/lib64/musl/errno.h
+/usr/lib64/musl/fcntl.h
+/usr/lib64/musl/features.h
+/usr/lib64/musl/fenv.h
+/usr/lib64/musl/float.h
+/usr/lib64/musl/fmtmsg.h
+/usr/lib64/musl/fnmatch.h
+/usr/lib64/musl/ftw.h
+/usr/lib64/musl/getopt.h
+/usr/lib64/musl/glob.h
+/usr/lib64/musl/grp.h
+/usr/lib64/musl/iconv.h
+/usr/lib64/musl/ifaddrs.h
+/usr/lib64/musl/inttypes.h
+/usr/lib64/musl/iso646.h
+/usr/lib64/musl/langinfo.h
+/usr/lib64/musl/lastlog.h
+/usr/lib64/musl/lib64/Scrt1.o
+/usr/lib64/musl/lib64/crt1.o
+/usr/lib64/musl/lib64/crti.o
+/usr/lib64/musl/lib64/crtn.o
+/usr/lib64/musl/lib64/musl-gcc.specs
+/usr/lib64/musl/lib64/rcrt1.o
+/usr/lib64/musl/libgen.h
+/usr/lib64/musl/libintl.h
+/usr/lib64/musl/limits.h
+/usr/lib64/musl/link.h
+/usr/lib64/musl/locale.h
+/usr/lib64/musl/malloc.h
+/usr/lib64/musl/math.h
+/usr/lib64/musl/memory.h
+/usr/lib64/musl/mntent.h
+/usr/lib64/musl/monetary.h
+/usr/lib64/musl/mqueue.h
+/usr/lib64/musl/net/ethernet.h
+/usr/lib64/musl/net/if.h
+/usr/lib64/musl/net/if_arp.h
+/usr/lib64/musl/net/route.h
+/usr/lib64/musl/netdb.h
+/usr/lib64/musl/netinet/ether.h
+/usr/lib64/musl/netinet/icmp6.h
+/usr/lib64/musl/netinet/if_ether.h
+/usr/lib64/musl/netinet/igmp.h
+/usr/lib64/musl/netinet/in.h
+/usr/lib64/musl/netinet/in_systm.h
+/usr/lib64/musl/netinet/ip.h
+/usr/lib64/musl/netinet/ip6.h
+/usr/lib64/musl/netinet/ip_icmp.h
+/usr/lib64/musl/netinet/tcp.h
+/usr/lib64/musl/netinet/udp.h
+/usr/lib64/musl/netpacket/packet.h
+/usr/lib64/musl/nl_types.h
+/usr/lib64/musl/paths.h
+/usr/lib64/musl/poll.h
+/usr/lib64/musl/pthread.h
+/usr/lib64/musl/pty.h
+/usr/lib64/musl/pwd.h
+/usr/lib64/musl/regex.h
+/usr/lib64/musl/resolv.h
+/usr/lib64/musl/sched.h
+/usr/lib64/musl/scsi/scsi.h
+/usr/lib64/musl/scsi/scsi_ioctl.h
+/usr/lib64/musl/scsi/sg.h
+/usr/lib64/musl/search.h
+/usr/lib64/musl/semaphore.h
+/usr/lib64/musl/setjmp.h
+/usr/lib64/musl/shadow.h
+/usr/lib64/musl/signal.h
+/usr/lib64/musl/spawn.h
+/usr/lib64/musl/stdalign.h
+/usr/lib64/musl/stdarg.h
+/usr/lib64/musl/stdbool.h
+/usr/lib64/musl/stdc-predef.h
+/usr/lib64/musl/stddef.h
+/usr/lib64/musl/stdint.h
+/usr/lib64/musl/stdio.h
+/usr/lib64/musl/stdio_ext.h
+/usr/lib64/musl/stdlib.h
+/usr/lib64/musl/stdnoreturn.h
+/usr/lib64/musl/string.h
+/usr/lib64/musl/strings.h
+/usr/lib64/musl/stropts.h
+/usr/lib64/musl/sys/acct.h
+/usr/lib64/musl/sys/auxv.h
+/usr/lib64/musl/sys/cachectl.h
+/usr/lib64/musl/sys/dir.h
+/usr/lib64/musl/sys/epoll.h
+/usr/lib64/musl/sys/errno.h
+/usr/lib64/musl/sys/eventfd.h
+/usr/lib64/musl/sys/fanotify.h
+/usr/lib64/musl/sys/fcntl.h
+/usr/lib64/musl/sys/file.h
+/usr/lib64/musl/sys/fsuid.h
+/usr/lib64/musl/sys/inotify.h
+/usr/lib64/musl/sys/io.h
+/usr/lib64/musl/sys/ioctl.h
+/usr/lib64/musl/sys/ipc.h
+/usr/lib64/musl/sys/kd.h
+/usr/lib64/musl/sys/klog.h
+/usr/lib64/musl/sys/mman.h
+/usr/lib64/musl/sys/mount.h
+/usr/lib64/musl/sys/msg.h
+/usr/lib64/musl/sys/mtio.h
+/usr/lib64/musl/sys/param.h
+/usr/lib64/musl/sys/personality.h
+/usr/lib64/musl/sys/poll.h
+/usr/lib64/musl/sys/prctl.h
+/usr/lib64/musl/sys/procfs.h
+/usr/lib64/musl/sys/ptrace.h
+/usr/lib64/musl/sys/quota.h
+/usr/lib64/musl/sys/reboot.h
+/usr/lib64/musl/sys/reg.h
+/usr/lib64/musl/sys/resource.h
+/usr/lib64/musl/sys/select.h
+/usr/lib64/musl/sys/sem.h
+/usr/lib64/musl/sys/sendfile.h
+/usr/lib64/musl/sys/shm.h
+/usr/lib64/musl/sys/signal.h
+/usr/lib64/musl/sys/signalfd.h
+/usr/lib64/musl/sys/socket.h
+/usr/lib64/musl/sys/soundcard.h
+/usr/lib64/musl/sys/stat.h
+/usr/lib64/musl/sys/statfs.h
+/usr/lib64/musl/sys/statvfs.h
+/usr/lib64/musl/sys/stropts.h
+/usr/lib64/musl/sys/swap.h
+/usr/lib64/musl/sys/syscall.h
+/usr/lib64/musl/sys/sysinfo.h
+/usr/lib64/musl/sys/syslog.h
+/usr/lib64/musl/sys/sysmacros.h
+/usr/lib64/musl/sys/termios.h
+/usr/lib64/musl/sys/time.h
+/usr/lib64/musl/sys/timeb.h
+/usr/lib64/musl/sys/timerfd.h
+/usr/lib64/musl/sys/times.h
+/usr/lib64/musl/sys/timex.h
+/usr/lib64/musl/sys/ttydefaults.h
+/usr/lib64/musl/sys/types.h
+/usr/lib64/musl/sys/ucontext.h
+/usr/lib64/musl/sys/uio.h
+/usr/lib64/musl/sys/un.h
+/usr/lib64/musl/sys/user.h
+/usr/lib64/musl/sys/utsname.h
+/usr/lib64/musl/sys/vfs.h
+/usr/lib64/musl/sys/vt.h
+/usr/lib64/musl/sys/wait.h
+/usr/lib64/musl/sys/xattr.h
+/usr/lib64/musl/syscall.h
+/usr/lib64/musl/sysexits.h
+/usr/lib64/musl/syslog.h
+/usr/lib64/musl/tar.h
+/usr/lib64/musl/termios.h
+/usr/lib64/musl/tgmath.h
+/usr/lib64/musl/threads.h
+/usr/lib64/musl/time.h
+/usr/lib64/musl/uchar.h
+/usr/lib64/musl/ucontext.h
+/usr/lib64/musl/ulimit.h
+/usr/lib64/musl/unistd.h
+/usr/lib64/musl/utime.h
+/usr/lib64/musl/utmp.h
+/usr/lib64/musl/utmpx.h
+/usr/lib64/musl/values.h
+/usr/lib64/musl/wait.h
+/usr/lib64/musl/wchar.h
+/usr/lib64/musl/wctype.h
+/usr/lib64/musl/wordexp.h
 
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/musl-gcc
 
-%files dev
+%files lib
 %defattr(-,root,root,-)
-/usr/include/*.h
-/usr/include/arpa/ftp.h
-/usr/include/arpa/inet.h
-/usr/include/arpa/nameser.h
-/usr/include/arpa/nameser_compat.h
-/usr/include/arpa/telnet.h
-/usr/include/arpa/tftp.h
-/usr/include/bits/alltypes.h
-/usr/include/bits/endian.h
-/usr/include/bits/errno.h
-/usr/include/bits/fcntl.h
-/usr/include/bits/fenv.h
-/usr/include/bits/float.h
-/usr/include/bits/io.h
-/usr/include/bits/ioctl.h
-/usr/include/bits/ioctl_fix.h
-/usr/include/bits/ipc.h
-/usr/include/bits/limits.h
-/usr/include/bits/mman.h
-/usr/include/bits/msg.h
-/usr/include/bits/poll.h
-/usr/include/bits/posix.h
-/usr/include/bits/reg.h
-/usr/include/bits/resource.h
-/usr/include/bits/sem.h
-/usr/include/bits/setjmp.h
-/usr/include/bits/shm.h
-/usr/include/bits/signal.h
-/usr/include/bits/socket.h
-/usr/include/bits/stat.h
-/usr/include/bits/statfs.h
-/usr/include/bits/stdarg.h
-/usr/include/bits/stdint.h
-/usr/include/bits/syscall.h
-/usr/include/bits/termios.h
-/usr/include/bits/user.h
-/usr/include/net/ethernet.h
-/usr/include/net/if.h
-/usr/include/net/if_arp.h
-/usr/include/net/route.h
-/usr/include/netinet/ether.h
-/usr/include/netinet/icmp6.h
-/usr/include/netinet/if_ether.h
-/usr/include/netinet/igmp.h
-/usr/include/netinet/in.h
-/usr/include/netinet/in_systm.h
-/usr/include/netinet/ip.h
-/usr/include/netinet/ip6.h
-/usr/include/netinet/ip_icmp.h
-/usr/include/netinet/tcp.h
-/usr/include/netinet/udp.h
-/usr/include/netpacket/packet.h
-/usr/include/scsi/scsi.h
-/usr/include/scsi/scsi_ioctl.h
-/usr/include/scsi/sg.h
-/usr/include/sys/acct.h
-/usr/include/sys/auxv.h
-/usr/include/sys/cachectl.h
-/usr/include/sys/dir.h
-/usr/include/sys/epoll.h
-/usr/include/sys/errno.h
-/usr/include/sys/eventfd.h
-/usr/include/sys/fanotify.h
-/usr/include/sys/fcntl.h
-/usr/include/sys/file.h
-/usr/include/sys/fsuid.h
-/usr/include/sys/inotify.h
-/usr/include/sys/io.h
-/usr/include/sys/ioctl.h
-/usr/include/sys/ipc.h
-/usr/include/sys/kd.h
-/usr/include/sys/klog.h
-/usr/include/sys/mman.h
-/usr/include/sys/mount.h
-/usr/include/sys/msg.h
-/usr/include/sys/mtio.h
-/usr/include/sys/param.h
-/usr/include/sys/personality.h
-/usr/include/sys/poll.h
-/usr/include/sys/prctl.h
-/usr/include/sys/procfs.h
-/usr/include/sys/ptrace.h
-/usr/include/sys/quota.h
-/usr/include/sys/reboot.h
-/usr/include/sys/reg.h
-/usr/include/sys/resource.h
-/usr/include/sys/select.h
-/usr/include/sys/sem.h
-/usr/include/sys/sendfile.h
-/usr/include/sys/shm.h
-/usr/include/sys/signal.h
-/usr/include/sys/signalfd.h
-/usr/include/sys/socket.h
-/usr/include/sys/soundcard.h
-/usr/include/sys/stat.h
-/usr/include/sys/statfs.h
-/usr/include/sys/statvfs.h
-/usr/include/sys/stropts.h
-/usr/include/sys/swap.h
-/usr/include/sys/syscall.h
-/usr/include/sys/sysinfo.h
-/usr/include/sys/syslog.h
-/usr/include/sys/sysmacros.h
-/usr/include/sys/termios.h
-/usr/include/sys/time.h
-/usr/include/sys/timeb.h
-/usr/include/sys/timerfd.h
-/usr/include/sys/times.h
-/usr/include/sys/timex.h
-/usr/include/sys/ttydefaults.h
-/usr/include/sys/types.h
-/usr/include/sys/ucontext.h
-/usr/include/sys/uio.h
-/usr/include/sys/un.h
-/usr/include/sys/user.h
-/usr/include/sys/utsname.h
-/usr/include/sys/vfs.h
-/usr/include/sys/vt.h
-/usr/include/sys/wait.h
-/usr/include/sys/xattr.h
-/usr/lib64/*.so
+/usr/lib64/musl/lib64/libc.so

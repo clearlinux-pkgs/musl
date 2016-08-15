@@ -1,1 +1,1 @@
---target=x86_64-generic-linux --prefix=/usr/lib64/musl
+--target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/ --libdir=/usr/lib64/musl/lib64
