@@ -1,0 +1,29 @@
+From 64fae248be6de22a625a8ad020dd4d330be4867d Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Mon, 15 Aug 2016 18:41:15 +0000
+Subject: [PATCH] Don't use cross compile ar or ranlib
+
+Because using --target isn't sufficient to get ar or ranlib to have the
+right filename, hardcode to use the generic filenames.
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 8246b78..018c64f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -51,8 +51,8 @@ CFLAGS_ALL += $(CPPFLAGS) $(CFLAGS_AUTO) $(CFLAGS)
+ 
+ LDFLAGS_ALL = $(LDFLAGS_AUTO) $(LDFLAGS)
+ 
+-AR      = $(CROSS_COMPILE)ar
+-RANLIB  = $(CROSS_COMPILE)ranlib
++AR      = ar
++RANLIB  = ranlib
+ INSTALL = $(srcdir)/tools/install.sh
+ 
+ ARCH_INCLUDES = $(wildcard $(srcdir)/arch/$(ARCH)/bits/*.h)
+-- 
+2.9.2
+
