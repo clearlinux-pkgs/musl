@@ -6,11 +6,11 @@
 #
 %define keepstatic 1
 Name     : musl
-Version  : 1.1.18
-Release  : 12
-URL      : https://www.musl-libc.org/releases/musl-1.1.18.tar.gz
-Source0  : https://www.musl-libc.org/releases/musl-1.1.18.tar.gz
-Source99 : https://www.musl-libc.org/releases/musl-1.1.18.tar.gz.asc
+Version  : 1.1.19
+Release  : 13
+URL      : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz
+Source0  : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz
+Source99 : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
@@ -57,7 +57,7 @@ lib components for the musl package.
 
 
 %prep
-%setup -q -n musl-1.1.18
+%setup -q -n musl-1.1.19
 %patch1 -p1
 
 %build
@@ -65,12 +65,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1510236738
+export SOURCE_DATE_EPOCH=1519394405
 %configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1510236738
+export SOURCE_DATE_EPOCH=1519394405
 rm -rf %{buildroot}
 %make_install
 
