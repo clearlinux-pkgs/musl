@@ -7,7 +7,7 @@
 %define keepstatic 1
 Name     : musl
 Version  : 1.1.19
-Release  : 13
+Release  : 14
 URL      : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz
 Source99 : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz.asc
