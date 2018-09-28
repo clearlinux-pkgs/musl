@@ -6,16 +6,17 @@
 #
 %define keepstatic 1
 Name     : musl
-Version  : 1.1.19
-Release  : 14
-URL      : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz
-Source0  : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz
-Source99 : https://www.musl-libc.org/releases/musl-1.1.19.tar.gz.asc
+Version  : 1.1.20
+Release  : 15
+URL      : https://www.musl-libc.org/releases/musl-1.1.20.tar.gz
+Source0  : https://www.musl-libc.org/releases/musl-1.1.20.tar.gz
+Source99 : https://www.musl-libc.org/releases/musl-1.1.20.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
-Requires: musl-bin
-Requires: musl-lib
+Requires: musl-bin = %{version}-%{release}
+Requires: musl-lib = %{version}-%{release}
+Requires: musl-license = %{version}-%{release}
 Patch1: 0001-Don-t-use-cross-compile-ar-or-ranlib.patch
 
 %description
@@ -32,6 +33,7 @@ achieved through simple code that is easy to understand and maintain.
 %package bin
 Summary: bin components for the musl package.
 Group: Binaries
+Requires: musl-license = %{version}-%{release}
 
 %description bin
 bin components for the musl package.
@@ -40,9 +42,9 @@ bin components for the musl package.
 %package dev
 Summary: dev components for the musl package.
 Group: Development
-Requires: musl-lib
-Requires: musl-bin
-Provides: musl-devel
+Requires: musl-lib = %{version}-%{release}
+Requires: musl-bin = %{version}-%{release}
+Provides: musl-devel = %{version}-%{release}
 
 %description dev
 dev components for the musl package.
@@ -51,13 +53,22 @@ dev components for the musl package.
 %package lib
 Summary: lib components for the musl package.
 Group: Libraries
+Requires: musl-license = %{version}-%{release}
 
 %description lib
 lib components for the musl package.
 
 
+%package license
+Summary: license components for the musl package.
+Group: Default
+
+%description license
+license components for the musl package.
+
+
 %prep
-%setup -q -n musl-1.1.19
+%setup -q -n musl-1.1.20
 %patch1 -p1
 
 %build
@@ -65,13 +76,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1519394405
+export SOURCE_DATE_EPOCH=1538148091
 %configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1519394405
+export SOURCE_DATE_EPOCH=1538148091
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/musl
+cp COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/COPYRIGHT
 %make_install
 
 %files
@@ -120,12 +133,14 @@ rm -rf %{buildroot}
 /usr/lib64/musl/include/bits/ioctl.h
 /usr/lib64/musl/include/bits/ioctl_fix.h
 /usr/lib64/musl/include/bits/ipc.h
+/usr/lib64/musl/include/bits/kd.h
 /usr/lib64/musl/include/bits/limits.h
 /usr/lib64/musl/include/bits/link.h
 /usr/lib64/musl/include/bits/mman.h
 /usr/lib64/musl/include/bits/msg.h
 /usr/lib64/musl/include/bits/poll.h
 /usr/lib64/musl/include/bits/posix.h
+/usr/lib64/musl/include/bits/ptrace.h
 /usr/lib64/musl/include/bits/reg.h
 /usr/lib64/musl/include/bits/resource.h
 /usr/lib64/musl/include/bits/sem.h
@@ -133,12 +148,14 @@ rm -rf %{buildroot}
 /usr/lib64/musl/include/bits/shm.h
 /usr/lib64/musl/include/bits/signal.h
 /usr/lib64/musl/include/bits/socket.h
+/usr/lib64/musl/include/bits/soundcard.h
 /usr/lib64/musl/include/bits/stat.h
 /usr/lib64/musl/include/bits/statfs.h
 /usr/lib64/musl/include/bits/stdint.h
 /usr/lib64/musl/include/bits/syscall.h
 /usr/lib64/musl/include/bits/termios.h
 /usr/lib64/musl/include/bits/user.h
+/usr/lib64/musl/include/bits/vt.h
 /usr/lib64/musl/include/byteswap.h
 /usr/lib64/musl/include/complex.h
 /usr/lib64/musl/include/cpio.h
@@ -253,6 +270,7 @@ rm -rf %{buildroot}
 /usr/lib64/musl/include/sys/procfs.h
 /usr/lib64/musl/include/sys/ptrace.h
 /usr/lib64/musl/include/sys/quota.h
+/usr/lib64/musl/include/sys/random.h
 /usr/lib64/musl/include/sys/reboot.h
 /usr/lib64/musl/include/sys/reg.h
 /usr/lib64/musl/include/sys/resource.h
@@ -314,3 +332,7 @@ rm -rf %{buildroot}
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/musl/lib64/libc.so
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/package-licenses/musl/COPYRIGHT
