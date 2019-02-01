@@ -6,17 +6,16 @@
 #
 %define keepstatic 1
 Name     : musl
-Version  : 1.1.20
-Release  : 15
-URL      : https://www.musl-libc.org/releases/musl-1.1.20.tar.gz
-Source0  : https://www.musl-libc.org/releases/musl-1.1.20.tar.gz
-Source99 : https://www.musl-libc.org/releases/musl-1.1.20.tar.gz.asc
+Version  : 1.1.21
+Release  : 16
+URL      : https://www.musl-libc.org/releases/musl-1.1.21.tar.gz
+Source0  : https://www.musl-libc.org/releases/musl-1.1.21.tar.gz
+Source99 : https://www.musl-libc.org/releases/musl-1.1.21.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
 Requires: musl-bin = %{version}-%{release}
 Requires: musl-lib = %{version}-%{release}
-Requires: musl-license = %{version}-%{release}
 Patch1: 0001-Don-t-use-cross-compile-ar-or-ranlib.patch
 
 %description
@@ -33,7 +32,6 @@ achieved through simple code that is easy to understand and maintain.
 %package bin
 Summary: bin components for the musl package.
 Group: Binaries
-Requires: musl-license = %{version}-%{release}
 
 %description bin
 bin components for the musl package.
@@ -53,22 +51,13 @@ dev components for the musl package.
 %package lib
 Summary: lib components for the musl package.
 Group: Libraries
-Requires: musl-license = %{version}-%{release}
 
 %description lib
 lib components for the musl package.
 
 
-%package license
-Summary: license components for the musl package.
-Group: Default
-
-%description license
-license components for the musl package.
-
-
 %prep
-%setup -q -n musl-1.1.20
+%setup -q -n musl-1.1.21
 %patch1 -p1
 
 %build
@@ -76,15 +65,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1538148091
+export SOURCE_DATE_EPOCH=1549053472
 %configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1538148091
+export SOURCE_DATE_EPOCH=1549053472
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/package-licenses/musl
-cp COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/COPYRIGHT
 %make_install
 
 %files
@@ -332,7 +319,3 @@ cp COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/COPYRIGHT
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/musl/lib64/libc.so
-
-%files license
-%defattr(-,root,root,-)
-/usr/share/package-licenses/musl/COPYRIGHT
