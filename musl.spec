@@ -7,7 +7,7 @@
 %define keepstatic 1
 Name     : musl
 Version  : 1.1.21
-Release  : 16
+Release  : 17
 URL      : https://www.musl-libc.org/releases/musl-1.1.21.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.1.21.tar.gz
 Source99 : https://www.musl-libc.org/releases/musl-1.1.21.tar.gz.asc
