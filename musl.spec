@@ -7,7 +7,7 @@
 %define keepstatic 1
 Name     : musl
 Version  : 1.1.23
-Release  : 19
+Release  : 20
 URL      : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz
 Source1 : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz.asc
@@ -18,6 +18,8 @@ Requires: musl-bin = %{version}-%{release}
 Requires: musl-lib = %{version}-%{release}
 Requires: musl-license = %{version}-%{release}
 Patch1: 0001-Don-t-use-cross-compile-ar-or-ranlib.patch
+Patch2: CVE-2019-14697.patch
+Patch3: fix-build-regression-in-i386.patch
 
 %description
 musl libc
@@ -71,23 +73,25 @@ license components for the musl package.
 %prep
 %setup -q -n musl-1.1.23
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569050847
+export SOURCE_DATE_EPOCH=1569055376
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
-export CXXFLAGS="$CXXFLAGS -fno-lto "
+export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1569050847
+export SOURCE_DATE_EPOCH=1569055376
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/musl
 cp COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/COPYRIGHT
