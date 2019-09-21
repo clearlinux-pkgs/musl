@@ -6,12 +6,12 @@
 #
 %define keepstatic 1
 Name     : musl
-Version  : 1.1.22
-Release  : 18
-URL      : https://www.musl-libc.org/releases/musl-1.1.22.tar.gz
-Source0  : https://www.musl-libc.org/releases/musl-1.1.22.tar.gz
-Source99 : https://www.musl-libc.org/releases/musl-1.1.22.tar.gz.asc
-Summary  : Lightweight implementation of C standard library
+Version  : 1.1.23
+Release  : 19
+URL      : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz
+Source0  : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz
+Source1 : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz.asc
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
 Requires: musl-bin = %{version}-%{release}
@@ -69,20 +69,25 @@ license components for the musl package.
 
 
 %prep
-%setup -q -n musl-1.1.22
+%setup -q -n musl-1.1.23
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1555081195
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1569050847
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1555081195
+export SOURCE_DATE_EPOCH=1569050847
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/musl
 cp COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/COPYRIGHT
