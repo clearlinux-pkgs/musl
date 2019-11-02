@@ -1,3 +1,1 @@
 0001-Don-t-use-cross-compile-ar-or-ranlib.patch
-CVE-2019-14697.patch
-fix-build-regression-in-i386.patch

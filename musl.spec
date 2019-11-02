@@ -6,20 +6,19 @@
 #
 %define keepstatic 1
 Name     : musl
-Version  : 1.1.23
-Release  : 20
-URL      : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz
-Source0  : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz
-Source1 : https://www.musl-libc.org/releases/musl-1.1.23.tar.gz.asc
+Version  : 1.1.24
+Release  : 21
+URL      : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz
+Source0  : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz
+Source1 : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
 Requires: musl-bin = %{version}-%{release}
 Requires: musl-lib = %{version}-%{release}
 Requires: musl-license = %{version}-%{release}
+BuildRequires : util-linux
 Patch1: 0001-Don-t-use-cross-compile-ar-or-ranlib.patch
-Patch2: CVE-2019-14697.patch
-Patch3: fix-build-regression-in-i386.patch
 
 %description
 musl libc
@@ -71,17 +70,16 @@ license components for the musl package.
 
 
 %prep
-%setup -q -n musl-1.1.23
+%setup -q -n musl-1.1.24
+cd %{_builddir}/musl-1.1.24
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569055376
+export SOURCE_DATE_EPOCH=1572654577
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -91,10 +89,10 @@ export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1569055376
+export SOURCE_DATE_EPOCH=1572654577
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/musl
-cp COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/COPYRIGHT
+cp %{_builddir}/musl-1.1.24/COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/45f4501f74dea078024219b192588f7849eacadb
 %make_install
 
 %files
@@ -143,6 +141,7 @@ cp COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/COPYRIGHT
 /usr/lib64/musl/include/bits/ioctl.h
 /usr/lib64/musl/include/bits/ioctl_fix.h
 /usr/lib64/musl/include/bits/ipc.h
+/usr/lib64/musl/include/bits/ipcstat.h
 /usr/lib64/musl/include/bits/kd.h
 /usr/lib64/musl/include/bits/limits.h
 /usr/lib64/musl/include/bits/link.h
@@ -346,4 +345,4 @@ cp COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/COPYRIGHT
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/musl/COPYRIGHT
+/usr/share/package-licenses/musl/45f4501f74dea078024219b192588f7849eacadb
