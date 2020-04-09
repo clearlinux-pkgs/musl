@@ -7,17 +7,17 @@
 %define keepstatic 1
 Name     : musl
 Version  : 1.1.24
-Release  : 21
+Release  : 22
 URL      : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz
-Source1 : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz.asc
+Source1  : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
 Requires: musl-bin = %{version}-%{release}
 Requires: musl-lib = %{version}-%{release}
 Requires: musl-license = %{version}-%{release}
-BuildRequires : util-linux
+Requires: musl-plugins = %{version}-%{release}
 Patch1: 0001-Don-t-use-cross-compile-ar-or-ranlib.patch
 
 %description
@@ -69,6 +69,14 @@ Group: Default
 license components for the musl package.
 
 
+%package plugins
+Summary: plugins components for the musl package.
+Group: Default
+
+%description plugins
+plugins components for the musl package.
+
+
 %prep
 %setup -q -n musl-1.1.24
 cd %{_builddir}/musl-1.1.24
@@ -79,17 +87,17 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1572654577
+export SOURCE_DATE_EPOCH=1586444273
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-%configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64
+%configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64 --syslibdir=/usr/lib
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1572654577
+export SOURCE_DATE_EPOCH=1586444273
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/musl
 cp %{_builddir}/musl-1.1.24/COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/45f4501f74dea078024219b192588f7849eacadb
@@ -97,7 +105,6 @@ cp %{_builddir}/musl-1.1.24/COPYRIGHT %{buildroot}/usr/share/package-licenses/mu
 
 %files
 %defattr(-,root,root,-)
-/lib/ld-musl-x86_64.so.1
 /usr/lib64/musl/lib64/Scrt1.o
 /usr/lib64/musl/lib64/crt1.o
 /usr/lib64/musl/lib64/crti.o
@@ -346,3 +353,7 @@ cp %{_builddir}/musl-1.1.24/COPYRIGHT %{buildroot}/usr/share/package-licenses/mu
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/musl/45f4501f74dea078024219b192588f7849eacadb
+
+%files plugins
+%defattr(-,root,root,-)
+/usr/lib/ld-musl-x86_64.so.1
