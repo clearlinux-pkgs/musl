@@ -1,6 +1,6 @@
+Configure miss: whether compiler accepts -Werror=ignored-optimization-argument
 Configure miss: whether compiler accepts -Werror=unknown-warning-option
 Configure miss: whether compiler accepts -Werror=unused-command-line-argument
-Configure miss: whether compiler accepts -Werror=ignored-optimization-argument
+Configure miss: whether compiler needs attribute((may_alias)) suppression
 Configure miss: whether linker accepts -Werror=unknown-warning-option
 Configure miss: whether linker accepts -Werror=unused-command-line-argument
-Configure miss: whether compiler needs attribute((may_alias)) suppression

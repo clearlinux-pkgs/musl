@@ -6,11 +6,11 @@
 #
 %define keepstatic 1
 Name     : musl
-Version  : 1.1.24
-Release  : 23
-URL      : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz
-Source0  : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz
-Source1  : https://www.musl-libc.org/releases/musl-1.1.24.tar.gz.asc
+Version  : 1.2.3
+Release  : 24
+URL      : https://www.musl-libc.org/releases/musl-1.2.3.tar.gz
+Source0  : https://www.musl-libc.org/releases/musl-1.2.3.tar.gz
+Source1  : https://www.musl-libc.org/releases/musl-1.2.3.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
@@ -78,8 +78,8 @@ plugins components for the musl package.
 
 
 %prep
-%setup -q -n musl-1.1.24
-cd %{_builddir}/musl-1.1.24
+%setup -q -n musl-1.2.3
+cd %{_builddir}/musl-1.2.3
 %patch1 -p1
 
 %build
@@ -87,20 +87,25 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1586444273
+export SOURCE_DATE_EPOCH=1652244262
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
-%configure  --target=x86_64-generic-linux --prefix=/usr/lib64/musl --exec-prefix=/usr --includedir=/usr/lib64/musl/include --libdir=/usr/lib64/musl/lib64 --syslibdir=/usr/lib
+%configure  --target=x86_64-generic-linux \
+--prefix=/usr/lib64/musl \
+--exec-prefix=/usr \
+--includedir=/usr/lib64/musl/include \
+--libdir=/usr/lib64/musl/lib64 \
+--syslibdir=/usr/lib
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1586444273
+export SOURCE_DATE_EPOCH=1652244262
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/musl
-cp %{_builddir}/musl-1.1.24/COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/45f4501f74dea078024219b192588f7849eacadb
+cp %{_builddir}/musl-1.2.3/COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/4808116261778b2137bb955568032cd684fb199b
 %make_install
 
 %files
@@ -138,7 +143,7 @@ cp %{_builddir}/musl-1.1.24/COPYRIGHT %{buildroot}/usr/share/package-licenses/mu
 /usr/lib64/musl/include/arpa/tftp.h
 /usr/lib64/musl/include/assert.h
 /usr/lib64/musl/include/bits/alltypes.h
-/usr/lib64/musl/include/bits/endian.h
+/usr/lib64/musl/include/bits/dirent.h
 /usr/lib64/musl/include/bits/errno.h
 /usr/lib64/musl/include/bits/fcntl.h
 /usr/lib64/musl/include/bits/fenv.h
@@ -352,7 +357,7 @@ cp %{_builddir}/musl-1.1.24/COPYRIGHT %{buildroot}/usr/share/package-licenses/mu
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/musl/45f4501f74dea078024219b192588f7849eacadb
+/usr/share/package-licenses/musl/4808116261778b2137bb955568032cd684fb199b
 
 %files plugins
 %defattr(-,root,root,-)
