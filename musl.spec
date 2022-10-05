@@ -7,7 +7,7 @@
 %define keepstatic 1
 Name     : musl
 Version  : 1.2.3
-Release  : 24
+Release  : 25
 URL      : https://www.musl-libc.org/releases/musl-1.2.3.tar.gz
 Source0  : https://www.musl-libc.org/releases/musl-1.2.3.tar.gz
 Source1  : https://www.musl-libc.org/releases/musl-1.2.3.tar.gz.asc
@@ -87,12 +87,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1652244262
+export SOURCE_DATE_EPOCH=1664928944
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure  --target=x86_64-generic-linux \
 --prefix=/usr/lib64/musl \
 --exec-prefix=/usr \
@@ -102,10 +102,10 @@ export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-re
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1652244262
+export SOURCE_DATE_EPOCH=1664928944
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/musl
-cp %{_builddir}/musl-1.2.3/COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/4808116261778b2137bb955568032cd684fb199b
+cp %{_builddir}/musl-%{version}/COPYRIGHT %{buildroot}/usr/share/package-licenses/musl/4808116261778b2137bb955568032cd684fb199b || :
 %make_install
 
 %files
